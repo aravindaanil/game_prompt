@@ -52,6 +52,18 @@ export function IslandVisual({ stage }: IslandVisualProps) {
             <circle cx="260" cy="124" r="18" fill="#4b9bd5" />
           </>
         )}
+        <g className="island-avatars">
+          <circle cx="210" cy="178" r="8" fill="#243033" />
+          <rect x="204" y="186" width="12" height="18" rx="5" fill="#f0b33a" />
+          <circle cx="300" cy="176" r="8" fill="#243033" />
+          <rect x="294" y="184" width="12" height="18" rx="5" fill="#d74f3f" />
+          {stage >= 3 && (
+            <>
+              <circle cx="350" cy="184" r="7" fill="#243033" />
+              <rect x="345" y="191" width="10" height="16" rx="5" fill="#edf2f7" />
+            </>
+          )}
+        </g>
         <circle cx="112" cy="63" r="30" fill="#ffd66b" />
       </svg>
       <div className="island-caption">

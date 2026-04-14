@@ -53,3 +53,12 @@ export async function maybeTriggerBattle(): Promise<BattleLog | null> {
   if (error) throw error;
   return data as BattleLog | null;
 }
+
+export async function challengePlayer(defenderUserId: string): Promise<BattleLog> {
+  const { data, error } = await supabase.rpc('challenge_player_battle', {
+    defender_user_id: defenderUserId,
+  });
+
+  if (error) throw error;
+  return data as BattleLog;
+}

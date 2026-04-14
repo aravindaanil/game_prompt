@@ -1,6 +1,7 @@
 import { LogOut, RefreshCcw } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { BattleArena } from '../components/BattleArena';
 import { BattleLogPanel } from '../components/BattleLogPanel';
 import { IslandVisual } from '../components/IslandVisual';
 import { LeaderboardPanel } from '../components/LeaderboardPanel';
@@ -20,7 +21,17 @@ export default function DashboardPage() {
 
 function DashboardContent() {
   const navigate = useNavigate();
-  const { data, loading, actionLoading, collect, upgrade, refresh } = useDashboard();
+  const {
+    data,
+    loading,
+    actionLoading,
+    challengeLoadingId,
+    latestBattle,
+    collect,
+    upgrade,
+    challenge,
+    refresh,
+  } = useDashboard();
 
   async function handleSignOut() {
     await signOut();
@@ -94,8 +105,14 @@ function DashboardContent() {
         </section>
 
         <aside className="side-panels">
+          <BattleArena latestBattle={latestBattle} profile={data.profile} state={data.state} />
           <BattleLogPanel currentUserId={data.profile.id} logs={data.battleLogs} />
-          <LeaderboardPanel currentUserId={data.profile.id} rows={data.leaderboard} />
+          <LeaderboardPanel
+            challengeLoadingId={challengeLoadingId}
+            currentUserId={data.profile.id}
+            onChallenge={challenge}
+            rows={data.leaderboard}
+          />
         </aside>
       </section>
     </main>

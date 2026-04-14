@@ -3,9 +3,11 @@ import type { LeaderboardEntry } from '../types/game';
 type LeaderboardPanelProps = {
   rows: LeaderboardEntry[];
   currentUserId: string;
+  challengeLoadingId?: string | null;
+  onChallenge?: (userId: string) => void;
 };
 
-export function LeaderboardPanel({ rows, currentUserId }: LeaderboardPanelProps) {
+export function LeaderboardPanel({ rows, currentUserId, challengeLoadingId, onChallenge }: LeaderboardPanelProps) {
   return (
     <section className="panel">
       <div className="panel-heading">
@@ -22,6 +24,18 @@ export function LeaderboardPanel({ rows, currentUserId }: LeaderboardPanelProps)
               <strong>{row.username}</strong>
               <span>{row.army_power} power</span>
               <small>Lv {row.level}</small>
+              {row.user_id === currentUserId ? (
+                <span className="you-tag">You</span>
+              ) : (
+                <button
+                  className="challenge-button"
+                  disabled={!onChallenge || challengeLoadingId === row.user_id}
+                  onClick={() => onChallenge?.(row.user_id)}
+                  type="button"
+                >
+                  {challengeLoadingId === row.user_id ? 'Battling...' : 'Challenge'}
+                </button>
+              )}
             </li>
           ))}
         </ol>

@@ -274,6 +274,11 @@ a {
   color: #5c6c70;
 }
 
+.island-avatars {
+  animation: islandCrew 2.4s ease-in-out infinite;
+  transform-origin: center;
+}
+
 .action-strip,
 .upgrade-box {
   align-items: center;
@@ -308,8 +313,200 @@ a {
   gap: 1rem;
 }
 
-.panel {
+.panel,
+.battle-arena {
   padding: 1rem;
+}
+
+.battle-arena {
+  background: #ffffff;
+  border: 1px solid #d7e7e0;
+  border-radius: 8px;
+  box-shadow: 0 14px 36px rgba(36, 48, 51, 0.1);
+}
+
+.arena-heading {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+
+.arena-heading h2 {
+  color: #21363a;
+  font-size: 1.1rem;
+  margin: 0.1rem 0 0;
+}
+
+.arena-heading svg {
+  color: #d74f3f;
+}
+
+.arena-stage {
+  align-items: center;
+  background:
+    linear-gradient(180deg, rgba(121, 214, 208, 0.65), rgba(232, 246, 242, 0.92)),
+    #e8f6f2;
+  border: 1px solid #d7e7e0;
+  border-radius: 8px;
+  display: grid;
+  gap: 0.35rem;
+  grid-template-columns: 1fr 72px 1fr;
+  min-height: 190px;
+  overflow: hidden;
+  padding: 0.85rem;
+  position: relative;
+}
+
+.arena-stage::before {
+  background: #d8ad62;
+  border-radius: 50%;
+  bottom: -38px;
+  content: "";
+  height: 88px;
+  left: 12%;
+  position: absolute;
+  right: 12%;
+}
+
+.fighter {
+  align-items: center;
+  display: grid;
+  gap: 0.25rem;
+  justify-items: center;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.fighter strong,
+.fighter small {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+.fighter small {
+  color: #5c6c70;
+}
+
+.fighter-avatar {
+  align-items: center;
+  border: 3px solid #243033;
+  border-radius: 8px;
+  display: flex;
+  height: 74px;
+  justify-content: center;
+  position: relative;
+  width: 58px;
+}
+
+.fighter-avatar::before {
+  background: #243033;
+  border-radius: 50%;
+  content: "";
+  height: 24px;
+  position: absolute;
+  top: -18px;
+  width: 24px;
+}
+
+.fighter-avatar span {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 6px;
+  height: 28px;
+  width: 22px;
+}
+
+.avatar-scout {
+  background: #f0b33a;
+}
+
+.avatar-ranger {
+  background: #2f9b72;
+}
+
+.avatar-knight {
+  background: #777d81;
+}
+
+.avatar-archmage {
+  background: #4b9bd5;
+}
+
+.avatar-rival {
+  background: #d74f3f;
+}
+
+.fighter-left .fighter-avatar {
+  animation: heroIdle 1.7s ease-in-out infinite;
+}
+
+.fighter-right .fighter-avatar {
+  animation: rivalIdle 1.7s ease-in-out infinite;
+}
+
+.is-battling .fighter-left .fighter-avatar {
+  animation: heroStrike 1.1s ease-in-out 2;
+}
+
+.is-battling .fighter-right .fighter-avatar {
+  animation: rivalStrike 1.1s ease-in-out 2;
+}
+
+.arena-center {
+  align-items: center;
+  display: grid;
+  justify-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.arena-center strong {
+  background: #ffffff;
+  border: 2px solid #243033;
+  border-radius: 8px;
+  color: #d74f3f;
+  padding: 0.25rem 0.45rem;
+}
+
+.slash {
+  background: #ffffff;
+  border-radius: 8px;
+  height: 6px;
+  opacity: 0;
+  position: absolute;
+  width: 72px;
+}
+
+.slash-one {
+  transform: rotate(32deg);
+}
+
+.slash-two {
+  transform: rotate(-32deg);
+}
+
+.is-battling .slash-one {
+  animation: slashFlash 1.1s ease-in-out 2;
+}
+
+.is-battling .slash-two {
+  animation: slashFlash 1.1s ease-in-out 2 120ms;
+}
+
+.arena-result {
+  background: #f6faf7;
+  border: 1px solid #dfece6;
+  border-radius: 8px;
+  display: grid;
+  gap: 0.15rem;
+  margin-top: 0.7rem;
+  padding: 0.75rem;
+}
+
+.arena-result span {
+  color: #5c6c70;
 }
 
 .panel-heading {
@@ -379,7 +576,7 @@ a {
 
 .leaderboard li {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) auto auto;
+  grid-template-columns: 42px minmax(0, 1fr) auto auto auto;
 }
 
 .leaderboard .rank {
@@ -394,6 +591,85 @@ a {
 .leaderboard .is-current {
   background: #e8f6f2;
   border-color: #92d7c2;
+}
+
+.challenge-button {
+  background: #d74f3f;
+  color: #ffffff;
+  min-height: 34px;
+  padding: 0.45rem 0.65rem;
+}
+
+.you-tag {
+  background: #ffffff;
+  border: 1px solid #92d7c2;
+  border-radius: 8px;
+  color: #2f9b72;
+  font-size: 0.78rem;
+  font-weight: 900;
+  padding: 0.3rem 0.5rem;
+}
+
+@keyframes islandCrew {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes heroIdle {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(2deg);
+  }
+}
+
+@keyframes rivalIdle {
+  0%,
+  100% {
+    transform: translateY(-2px) rotate(2deg);
+  }
+  50% {
+    transform: translateY(2px) rotate(-2deg);
+  }
+}
+
+@keyframes heroStrike {
+  0%,
+  100% {
+    transform: translateX(0) rotate(-2deg);
+  }
+  45% {
+    transform: translateX(32px) rotate(8deg);
+  }
+}
+
+@keyframes rivalStrike {
+  0%,
+  100% {
+    transform: translateX(0) rotate(2deg);
+  }
+  55% {
+    transform: translateX(-32px) rotate(-8deg);
+  }
+}
+
+@keyframes slashFlash {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scaleX(0.2) rotate(32deg);
+  }
+  45% {
+    opacity: 1;
+    transform: scaleX(1) rotate(32deg);
+  }
 }
 
 @media (max-width: 900px) {
@@ -437,5 +713,13 @@ a {
 
   .leaderboard li {
     grid-template-columns: 44px minmax(0, 1fr);
+  }
+
+  .arena-stage {
+    grid-template-columns: 1fr;
+  }
+
+  .arena-center {
+    min-height: 42px;
   }
 }

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import {
+  challengePlayer,
   collectGold,
   fetchDashboardData,
   maybeTriggerBattle,
@@ -13,6 +14,8 @@ export function useDashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
+  const [challengeLoadingId, setChallengeLoadingId] = useState<string | null>(null);
+  const [latestBattle, setLatestBattle] = useState<DashboardData['battleLogs'][number] | null>(null);
 
   const refresh = useCallback(async () => {
     const dashboardData = await fetchDashboardData();
@@ -32,6 +35,7 @@ export function useDashboard() {
         if (!mounted) return;
         setData(dashboardData);
         if (battle) {
+          setLatestBattle(battle);
           toast.success('A scouting fleet returned with a new battle result.');
         }
       } catch (error) {
@@ -75,12 +79,32 @@ export function useDashboard() {
     }
   }, [refresh]);
 
+  const handleChallenge = useCallback(
+    async (defenderUserId: string) => {
+      try {
+        setChallengeLoadingId(defenderUserId);
+        const battle = await challengePlayer(defenderUserId);
+        setLatestBattle(battle);
+        await refresh();
+        toast.success('Challenge resolved.');
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : 'Could not challenge that player.');
+      } finally {
+        setChallengeLoadingId(null);
+      }
+    },
+    [refresh],
+  );
+
   return {
     data,
     loading,
     actionLoading,
+    challengeLoadingId,
+    latestBattle,
     collect: handleCollect,
     upgrade: handleUpgrade,
+    challenge: handleChallenge,
     refresh,
   };
 }
